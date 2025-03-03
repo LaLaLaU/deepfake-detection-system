@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepGuard - AI多模态Deepfake检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>DeepGuard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            检测服务
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                            <li><a class="dropdown-item" href="pages/text.html">文本检测</a></li>
+                            <li><a class="dropdown-item" href="pages/audio.html">语音检测</a></li>
+                            <li><a class="dropdown-item" href="pages/image.html">图像检测</a></li>
+                            <li><a class="dropdown-item" href="pages/video.html">视频检测</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="pages/team.html">团队介绍</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">智能识别<span class="text-primary">Deepfake</span>技术</h1>
+                    <p class="hero-text">
+                        DeepGuard是一套多模态融合检测系统，利用最先进的人工智能算法，帮助您识别各种媒体中的Deepfake内容，
+                        保护您在数字时代免受虚假信息的侵害。
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#detection-services" class="btn btn-primary me-3">开始检测</a>
+                        <a href="#how-it-works" class="btn btn-outline-light">了解更多</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <img src="images/hero-illustration.svg" alt="AI Deepfake Detection" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bg-elements">
+            <div class="hero-shape-1"></div>
+            <div class="hero-shape-2"></div>
+        </div>
+    </section>
+
+    <!-- 检测服务 -->
+    <section id="detection-services" class="section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">我们的检测服务</h2>
+                <p class="section-description">全方位多模态Deepfake检测，覆盖文本、语音、图像和视频</p>
+            </div>
+            <div class="row g-4">
+                <!-- 文本检测 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <div class="service-icon text-bg">
+                            <i class="bi bi-file-text"></i>
+                        </div>
+                        <h3 class="service-title">文本检测</h3>
+                        <p class="service-description">
+                            识别AI生成的文本内容，区分人类与机器创作，防止自动生成的误导性信息。
+                        </p>
+                        <a href="pages/text.html" class="btn btn-primary">立即检测</a>
+                    </div>
+                </div>
+                
+                <!-- 语音检测 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <div class="service-icon voice-bg">
+                            <i class="bi bi-mic"></i>
+                        </div>
+                        <h3 class="service-title">语音检测</h3>
+                        <p class="service-description">
+                            分析音频内容，识别合成或克隆的声音，防止语音欺诈和伪造。
+                        </p>
+                        <a href="pages/audio.html" class="btn btn-primary">立即检测</a>
+                    </div>
+                </div>
+                
+                <!-- 图像检测 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <div class="service-icon image-bg">
+                            <i class="bi bi-image"></i>
+                        </div>
+                        <h3 class="service-title">图像检测</h3>
+                        <p class="service-description">
+                            检测AI生成或篡改的图像，识别像素级别的异常和不自然特征。
+                        </p>
+                        <a href="pages/image.html" class="btn btn-primary">立即检测</a>
+                    </div>
+                </div>
+                
+                <!-- 视频检测 -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="service-card">
+                        <div class="service-icon video-bg">
+                            <i class="bi bi-camera-video"></i>
+                        </div>
+                        <h3 class="service-title">视频检测</h3>
+                        <p class="service-description">
+                            识别Deepfake视频，检测不自然的面部表情、眨眼和嘴唇同步问题。
+                        </p>
+                        <a href="pages/video.html" class="btn btn-primary">立即检测</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工作原理 -->
+    <section id="how-it-works" class="section bg-light">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">工作原理</h2>
+                <p class="section-description">了解我们的AI多模态融合技术如何检测Deepfake内容</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3 class="step-title">上传内容</h3>
+                        <p class="step-description">
+                            上传您想要检测的文本、语音、图像或视频文件到我们的平台。
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3 class="step-title">AI分析</h3>
+                        <p class="step-description">
+                            我们的多模态AI系统使用先进的深度学习模型对内容进行全面分析。
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3 class="step-title">特征提取</h3>
+                        <p class="step-description">
+                            系统提取关键特征并识别可能表明内容被操纵的异常模式。
+                        </p>
+                    </div>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3 class="step-title">结果呈现</h3>
+                        <p class="step-description">
+                            获取详细的分析报告，包括真实性评分和潜在操纵的可视化证据。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 技术特点 -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">技术特点</h2>
+                <p class="section-description">我们的系统采用尖端技术，确保高精度检测</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-braces"></i>
+                        </div>
+                        <h3 class="feature-title">多模态融合</h3>
+                        <p class="feature-description">
+                            结合文本、音频、图像和视频分析，提供全面的检测能力，超越单一模式的局限性。
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-graph-up"></i>
+                        </div>
+                        <h3 class="feature-title">99.7%准确率</h3>
+                        <p class="feature-description">
+                            基于最新研究和大规模数据集训练，我们的模型达到业界领先的检测准确率。
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-lock"></i>
+                        </div>
+                        <h3 class="feature-title">隐私保护</h3>
+                        <p class="feature-description">
+                            严格的隐私保护措施，上传的内容不会被存储或用于其他目的，确保您的数据安全。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队介绍预览 -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title">核心团队</h2>
+                <p class="section-description">由AI、计算机视觉和安全领域的专家组成</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="images/team-1.jpg" alt="团队成员" class="img-fluid">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">张教授</h3>
+                            <p class="team-position">首席科学家</p>
+                            <p class="team-bio">
+                                计算机视觉领域专家，在深度学习和图像处理方面拥有15年研究经验。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="images/team-2.jpg" alt="团队成员" class="img-fluid">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">李博士</h3>
+                            <p class="team-position">AI研究主管</p>
+                            <p class="team-bio">
+                                自然语言处理专家，曾在多家知名科技公司领导AI项目开发。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            <img src="images/team-3.jpg" alt="团队成员" class="img-fluid">
+                        </div>
+                        <div class="team-info">
+                            <h3 class="team-name">王工程师</h3>
+                            <p class="team-position">系统架构师</p>
+                            <p class="team-bio">
+                                软件工程专家，专注于构建高性能、可扩展的AI系统架构。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="pages/team.html" class="btn btn-outline-primary">查看完整团队</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <i class="bi bi-shield-check me-2"></i>
+                        <span>DeepGuard</span>
+                    </div>
+                    <p class="footer-description">
+                        提供最先进的多模态Deepfake检测技术，保护您在数字时代的信息安全。
+                    </p>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">快速链接</h5>
+                    <ul class="footer-links">
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="pages/team.html">团队介绍</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">检测服务</h5>
+                    <ul class="footer-links">
+                        <li><a href="pages/text.html">文本检测</a></li>
+                        <li><a href="pages/audio.html">语音检测</a></li>
+                        <li><a href="pages/image.html">图像检测</a></li>
+                        <li><a href="pages/video.html">视频检测</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="footer-title">联系我们</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span>contact@deepguard.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>+86 123 4567 8910</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>中国北京市海淀区科技园区123号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 DeepGuard. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

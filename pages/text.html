@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本检测 - DeepGuard AI多模态Deepfake检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <style>
+        /* 文本检测页面特定样式 */
+        .detection-form {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .detection-form textarea {
+            resize: vertical;
+            min-height: 200px;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .detection-form textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        
+        .upload-container {
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            background-color: var(--light-color);
+        }
+        
+        .upload-container:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+        
+        #file-preview {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .file-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .file-size {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .tab-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .tab-button {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: var(--gray-color);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-button::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .tab-button.active::after {
+            transform: scaleX(1);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* 结果卡片样式 */
+        .result-card {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .result-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .confidence-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .score-value {
+            display: flex;
+            align-items: center;
+        }
+        
+        .score-value span {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .features-analysis {
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-name {
+            width: 30%;
+            font-weight: 500;
+        }
+        
+        .feature-bar {
+            flex-grow: 1;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+        
+        .feature-progress {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .feature-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .recommendation {
+            padding: 1rem;
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+            border-radius: 0.5rem;
+        }
+        
+        .recommendation p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>DeepGuard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            检测服务
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+                            <li><a class="dropdown-item active" href="text.html">文本检测</a></li>
+                            <li><a class="dropdown-item" href="audio.html">语音检测</a></li>
+                            <li><a class="dropdown-item" href="image.html">图像检测</a></li>
+                            <li><a class="dropdown-item" href="video.html">视频检测</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team.html">团队介绍</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">文本检测</h1>
+            <p class="page-description">
+                使用我们的AI文本分析技术识别人工智能生成的文本内容
+            </p>
+        </div>
+    </section>
+
+    <!-- 检测表单 -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="detection-form">
+                        <div class="tab-container">
+                            <div class="tab-buttons">
+                                <button class="tab-button active" data-tab="input-tab">直接输入</button>
+                                <button class="tab-button" data-tab="upload-tab">上传文件</button>
+                            </div>
+                            
+                            <div id="input-tab" class="tab-content active">
+                                <form id="text-input-form" onsubmit="handleFormSubmit(event, 'text')">
+                                    <div class="mb-4">
+                                        <label for="text-content" class="form-label">输入文本内容</label>
+                                        <textarea id="text-content" class="form-control" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="bi bi-shield-check me-2"></i>开始检测
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <div id="upload-tab" class="tab-content">
+                                <form id="text-upload-form" onsubmit="handleFormSubmit(event, 'text')">
+                                    <div class="upload-container">
+                                        <i class="bi bi-file-text upload-icon"></i>
+                                        <h3 class="mb-3">上传文本文件</h3>
+                                        <p class="mb-4">支持 .txt, .doc, .docx, .pdf 格式</p>
+                                        <input type="file" id="text-file" class="form-control" 
+                                            accept=".txt,.doc,.docx,.pdf" 
+                                            onchange="handleFileSelect(event, 'file-preview')" />
+                                    </div>
+                                    
+                                    <div id="file-preview"></div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="bi bi-shield-check me-2"></i>开始检测
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 检测结果 -->
+                    <div id="text-result"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 相关说明 -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="mb-4">关于文本Deepfake检测</h2>
+                    <p>
+                        随着GPT、BERT等大型语言模型的发展，AI生成的文本内容在互联网上变得越来越普遍。
+                        这些生成的内容有时会被用于传播虚假信息、制造网络舆论或进行欺诈活动。
+                    </p>
+                    <p>
+                        我们的文本Deepfake检测系统采用最先进的NLP技术，通过分析文本的语言模式、
+                        词汇使用、句法结构和语义连贯性等特征，帮助识别可能由AI生成的文本内容。
+                    </p>
+                    
+                    <div class="row mt-5">
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <h3>检测原理</h3>
+                                <ul>
+                                    <li>语言模式分析</li>
+                                    <li>语义连贯性评估</li>
+                                    <li>风格和语调一致性</li>
+                                    <li>语法和词汇多样性</li>
+                                    <li>上下文理解能力</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="bi bi-info-circle"></i>
+                                </div>
+                                <h3>使用建议</h3>
+                                <ul>
+                                    <li>提供足够长度的文本以获得更准确的结果</li>
+                                    <li>检查结果是概率性的，并非绝对准确</li>
+                                    <li>考虑文本的上下文和来源</li>
+                                    <li>与其他信息交叉验证</li>
+                                    <li>定期更新检测工具以应对新技术</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <i class="bi bi-shield-check me-2"></i>
+                        <span>DeepGuard</span>
+                    </div>
+                    <p class="footer-description">
+                        提供最先进的多模态Deepfake检测技术，保护您在数字时代的信息安全。
+                    </p>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">快速链接</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">首页</a></li>
+                        <li><a href="team.html">团队介绍</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">检测服务</h5>
+                    <ul class="footer-links">
+                        <li><a href="text.html">文本检测</a></li>
+                        <li><a href="audio.html">语音检测</a></li>
+                        <li><a href="image.html">图像检测</a></li>
+                        <li><a href="video.html">视频检测</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="footer-title">联系我们</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span>contact@deepguard.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>+86 123 4567 8910</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>中国北京市海淀区科技园区123号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 DeepGuard. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // 页面特定脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 标签切换功能
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // 切换按钮状态
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 切换内容显示
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>语音检测 - DeepGuard AI多模态Deepfake检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <style>
+        /* 语音检测页面特定样式 */
+        .detection-form {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .upload-container {
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            background-color: var(--light-color);
+        }
+        
+        .upload-container:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+        
+        #audio-preview {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .audio-preview {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        .file-info {
+            text-align: center;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .file-size {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* 录音控制器样式 */
+        .record-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .record-button {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .record-button:hover {
+            transform: scale(1.05);
+            background-color: var(--primary-dark);
+        }
+        
+        .record-button:disabled {
+            background-color: var(--gray-color);
+            cursor: not-allowed;
+        }
+        
+        .record-status {
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            background-color: #dc3545;
+        }
+        
+        .status-indicator.recording {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
+            }
+            
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(220, 53, 69, 0);
+            }
+            
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(220, 53, 69, 0);
+            }
+        }
+        
+        .recording-time {
+            font-family: monospace;
+            font-size: 1.25rem;
+            margin-left: 1rem;
+        }
+        
+        /* 波形可视化 */
+        .waveform-container {
+            width: 100%;
+            height: 100px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .waveform-container.active {
+            display: block;
+        }
+        
+        /* 结果卡片样式 */
+        .result-card {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .result-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .confidence-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .score-value {
+            display: flex;
+            align-items: center;
+        }
+        
+        .score-value span {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .features-analysis {
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-name {
+            width: 30%;
+            font-weight: 500;
+        }
+        
+        .feature-bar {
+            flex-grow: 1;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+        
+        .feature-progress {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .feature-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .recommendation {
+            padding: 1rem;
+            background-color: rgba(var(--primary-color-rgb), 0.05);
+            border-radius: 0.5rem;
+        }
+        
+        .recommendation p {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>DeepGuard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            检测服务
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="text.html">文本检测</a></li>
+                            <li><a class="dropdown-item active" href="audio.html">语音检测</a></li>
+                            <li><a class="dropdown-item" href="image.html">图像检测</a></li>
+                            <li><a class="dropdown-item" href="video.html">视频检测</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team.html">团队介绍</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">联系我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">语音检测</h1>
+            <p class="page-description">
+                使用我们的AI语音分析技术识别合成或操纵的语音内容
+            </p>
+        </div>
+    </section>
+
+    <!-- 检测表单 -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="detection-form">
+                        <ul class="nav nav-tabs" id="audioTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="upload-tab" data-bs-toggle="tab" data-bs-target="#upload-panel" type="button" role="tab" aria-controls="upload-panel" aria-selected="true">
+                                    <i class="bi bi-cloud-upload me-2"></i>上传音频
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="record-tab" data-bs-toggle="tab" data-bs-target="#record-panel" type="button" role="tab" aria-controls="record-panel" aria-selected="false">
+                                    <i class="bi bi-mic me-2"></i>录制语音
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <div class="tab-content mt-4" id="audioTabContent">
+                            <!-- 上传音频面板 -->
+                            <div class="tab-pane fade show active" id="upload-panel" role="tabpanel" aria-labelledby="upload-tab">
+                                <form id="audio-upload-form" onsubmit="handleFormSubmit(event, 'audio')">
+                                    <div class="upload-container">
+                                        <i class="bi bi-file-earmark-music upload-icon"></i>
+                                        <h3 class="mb-3">上传音频文件</h3>
+                                        <p class="mb-4">支持 .mp3, .wav, .ogg, .m4a 格式</p>
+                                        <input type="file" id="audio-file" class="form-control" 
+                                            accept=".mp3,.wav,.ogg,.m4a" 
+                                            onchange="handleFileSelect(event, 'audio-preview')" />
+                                    </div>
+                                    
+                                    <div id="audio-preview"></div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100">
+                                        <i class="bi bi-shield-check me-2"></i>开始检测
+                                    </button>
+                                </form>
+                            </div>
+                            
+                            <!-- 录制语音面板 -->
+                            <div class="tab-pane fade" id="record-panel" role="tabpanel" aria-labelledby="record-tab">
+                                <div class="text-center mb-4">
+                                    <p>点击下方按钮开始录制您的声音</p>
+                                </div>
+                                
+                                <div class="record-controls">
+                                    <button id="recordButton" class="record-button">
+                                        <i class="bi bi-mic"></i>
+                                    </button>
+                                    <div class="record-status">
+                                        <div id="statusIndicator" class="status-indicator"></div>
+                                        <span id="recordingStatus">准备就绪</span>
+                                        <span id="recordingTime" class="recording-time">00:00</span>
+                                    </div>
+                                </div>
+                                
+                                <div id="waveform" class="waveform-container"></div>
+                                
+                                <div id="recordedAudio" style="display: none;" class="mt-4">
+                                    <h5 class="mb-3">录制的音频:</h5>
+                                    <audio id="audioPlayback" controls class="w-100"></audio>
+                                    
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <button id="retryRecording" class="btn btn-outline-secondary">
+                                            <i class="bi bi-arrow-repeat me-2"></i>重新录制
+                                        </button>
+                                        <button id="submitRecording" class="btn btn-primary">
+                                            <i class="bi bi-shield-check me-2"></i>开始检测
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 检测结果 -->
+                    <div id="audio-result"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 相关说明 -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="mb-4">关于语音Deepfake检测</h2>
+                    <p>
+                        随着语音合成和变声技术的快速发展，AI生成或修改的语音内容变得越来越逼真，
+                        这可能被用于欺诈、诈骗或制造虚假信息。
+                    </p>
+                    <p>
+                        我们的语音Deepfake检测系统使用先进的声纹识别和信号处理技术，
+                        通过分析语音的声学特征、自然性和一致性，帮助识别可能被合成或操纵的语音内容。
+                    </p>
+                    
+                    <div class="row mt-5">
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <h3>检测原理</h3>
+                                <ul>
+                                    <li>声纹和生物标记分析</li>
+                                    <li>语音频谱特征提取</li>
+                                    <li>语音韵律和节奏检测</li>
+                                    <li>背景噪声一致性</li>
+                                    <li>音频信号异常识别</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="bi bi-info-circle"></i>
+                                </div>
+                                <h3>使用建议</h3>
+                                <ul>
+                                    <li>提供高质量的音频样本获得更准确结果</li>
+                                    <li>最佳录音长度为10-30秒</li>
+                                    <li>尽量减少背景噪声</li>
+                                    <li>检测结果仅供参考，需结合上下文判断</li>
+                                    <li>考虑声音来源及其可信度</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <i class="bi bi-shield-check me-2"></i>
+                        <span>DeepGuard</span>
+                    </div>
+                    <p class="footer-description">
+                        提供最先进的多模态Deepfake检测技术，保护您在数字时代的信息安全。
+                    </p>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">快速链接</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">首页</a></li>
+                        <li><a href="team.html">团队介绍</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">检测服务</h5>
+                    <ul class="footer-links">
+                        <li><a href="text.html">文本检测</a></li>
+                        <li><a href="audio.html">语音检测</a></li>
+                        <li><a href="image.html">图像检测</a></li>
+                        <li><a href="video.html">视频检测</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="footer-title">联系我们</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span>contact@deepguard.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>+86 123 4567 8910</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>中国北京市海淀区科技园区123号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p> 2025 DeepGuard. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // 页面特定脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 录音功能相关代码
+            const recordButton = document.getElementById('recordButton');
+            const statusIndicator = document.getElementById('statusIndicator');
+            const recordingStatus = document.getElementById('recordingStatus');
+            const recordingTime = document.getElementById('recordingTime');
+            const waveform = document.getElementById('waveform');
+            const recordedAudio = document.getElementById('recordedAudio');
+            const audioPlayback = document.getElementById('audioPlayback');
+            const retryRecording = document.getElementById('retryRecording');
+            const submitRecording = document.getElementById('submitRecording');
+            
+            let mediaRecorder;
+            let audioChunks = [];
+            let startTime;
+            let timerInterval;
+            let recordingBlob;
+            
+            // 模拟录音功能（实际应用中需要使用MediaRecorder API）
+            recordButton.addEventListener('click', function() {
+                if (!mediaRecorder || mediaRecorder.state === 'inactive') {
+                    // 开始录音
+                    startRecording();
+                } else {
+                    // 停止录音
+                    stopRecording();
+                }
+            });
+            
+            function startRecording() {
+                // 在实际应用中，这里应该请求麦克风权限并初始化MediaRecorder
+                // 这里使用模拟代码
+                recordButton.innerHTML = '<i class="bi bi-stop-fill"></i>';
+                statusIndicator.classList.add('recording');
+                recordingStatus.textContent = '正在录音...';
+                waveform.classList.add('active');
+                
+                // 开始计时
+                startTime = Date.now();
+                updateRecordingTime();
+                timerInterval = setInterval(updateRecordingTime, 1000);
+                
+                // 模拟创建MediaRecorder
+                mediaRecorder = {
+                    state: 'recording',
+                    stop: function() {
+                        this.state = 'inactive';
+                        // 模拟录音完成
+                        simulateRecordingComplete();
+                    }
+                };
+                
+                audioChunks = [];
+            }
+            
+            function stopRecording() {
+                // 停止录音
+                mediaRecorder.stop();
+                recordButton.innerHTML = '<i class="bi bi-mic"></i>';
+                statusIndicator.classList.remove('recording');
+                recordingStatus.textContent = '录音已停止';
+                
+                // 停止计时
+                clearInterval(timerInterval);
+            }
+            
+            function updateRecordingTime() {
+                const elapsedTime = Date.now() - startTime;
+                const seconds = Math.floor((elapsedTime / 1000) % 60).toString().padStart(2, '0');
+                const minutes = Math.floor((elapsedTime / (1000 * 60)) % 60).toString().padStart(2, '0');
+                recordingTime.textContent = `${minutes}:${seconds}`;
+            }
+            
+            function simulateRecordingComplete() {
+                // 这里模拟录音完成后的处理
+                // 显示录音结果
+                recordedAudio.style.display = 'block';
+                
+                // 为演示目的，设置一个示例音频
+                audioPlayback.src = 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3';
+                
+                // 在实际应用中，这里应该将录音的音频块合并并设置为audioPlayback的源
+            }
+            
+            // 重新录制
+            retryRecording.addEventListener('click', function() {
+                recordedAudio.style.display = 'none';
+                waveform.classList.remove('active');
+                recordingStatus.textContent = '准备就绪';
+                recordingTime.textContent = '00:00';
+            });
+            
+            // 提交录音进行检测
+            submitRecording.addEventListener('click', function() {
+                // 模拟提交录音进行检测
+                const resultData = {
+                    isDeepfake: Math.random() > 0.5,
+                    confidence: Math.floor(Math.random() * 30) + 70,
+                    features: {
+                        voicePrint: Math.floor(Math.random() * 100),
+                        backgroundNoise: Math.floor(Math.random() * 100),
+                        speechPatterns: Math.floor(Math.random() * 100)
+                    }
+                };
+                
+                // 显示检测结果
+                showDetectionResult(resultData, 'audio');
+                
+                // 平滑滚动到结果区域
+                document.getElementById('audio-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>
