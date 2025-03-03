@@ -7,6 +7,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .animate-fadeInUp {
+            animation: fadeInUp 1s;
+        }
+        .animate-fadeInRight {
+            animation: fadeInRight 1s;
+        }
+        .animate-delay-200 {
+            animation-delay: 200ms;
+        }
+        .animate-delay-300 {
+            animation-delay: 300ms;
+        }
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        .animate-on-scroll.scroll-reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
 <body>
     <!-- 导航栏 -->
@@ -36,7 +59,10 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="pages/team.html">团队介绍</a>
+                        <a class="nav-link" href="pages/team.html">团队</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-sm text-white ms-2" href="pages/detector.html">开始检测</a>
                     </li>
                 </ul>
             </div>
@@ -48,18 +74,18 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6">
-                    <h1 class="hero-title">智能识别<span class="text-primary">Deepfake</span>技术</h1>
-                    <p class="hero-text">
+                    <h1 class="hero-title animate-fadeInUp">智能识别<span class="text-primary">Deepfake</span>技术</h1>
+                    <p class="hero-text animate-fadeInUp animate-delay-200">
                         DeepGuard是一套多模态融合检测系统，利用最先进的人工智能算法，帮助您识别各种媒体中的Deepfake内容，
                         保护您在数字时代免受虚假信息的侵害。
                     </p>
-                    <div class="hero-buttons">
+                    <div class="hero-buttons animate-fadeInUp animate-delay-300">
                         <a href="#detection-services" class="btn btn-primary me-3">开始检测</a>
                         <a href="#how-it-works" class="btn btn-outline-light">了解更多</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="hero-image">
+                    <div class="hero-image animate-fadeInRight animate-delay-300">
                         <img src="images/hero-illustration.svg" alt="AI Deepfake Detection" class="img-fluid">
                     </div>
                 </div>
@@ -74,14 +100,14 @@
     <!-- 检测服务 -->
     <section id="detection-services" class="section">
         <div class="container">
-            <div class="section-header text-center">
+            <div class="section-header text-center animate-on-scroll">
                 <h2 class="section-title">我们的检测服务</h2>
                 <p class="section-description">全方位多模态Deepfake检测，覆盖文本、语音、图像和视频</p>
             </div>
             <div class="row g-4">
                 <!-- 文本检测 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
+                    <div class="service-card animate-on-scroll">
                         <div class="service-icon text-bg">
                             <i class="bi bi-file-text"></i>
                         </div>
@@ -95,7 +121,7 @@
                 
                 <!-- 语音检测 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
+                    <div class="service-card animate-on-scroll">
                         <div class="service-icon voice-bg">
                             <i class="bi bi-mic"></i>
                         </div>
@@ -109,7 +135,7 @@
                 
                 <!-- 图像检测 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
+                    <div class="service-card animate-on-scroll">
                         <div class="service-icon image-bg">
                             <i class="bi bi-image"></i>
                         </div>
@@ -123,7 +149,7 @@
                 
                 <!-- 视频检测 -->
                 <div class="col-md-6 col-lg-3">
-                    <div class="service-card">
+                    <div class="service-card animate-on-scroll">
                         <div class="service-icon video-bg">
                             <i class="bi bi-camera-video"></i>
                         </div>
@@ -141,12 +167,12 @@
     <!-- 工作原理 -->
     <section id="how-it-works" class="section bg-light">
         <div class="container">
-            <div class="section-header text-center">
+            <div class="section-header text-center animate-on-scroll">
                 <h2 class="section-title">工作原理</h2>
                 <p class="section-description">了解我们的AI多模态融合技术如何检测Deepfake内容</p>
             </div>
             <div class="steps-container">
-                <div class="step-item">
+                <div class="step-item animate-on-scroll">
                     <div class="step-number">1</div>
                     <div class="step-content">
                         <h3 class="step-title">上传内容</h3>
@@ -155,7 +181,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="step-item">
+                <div class="step-item animate-on-scroll">
                     <div class="step-number">2</div>
                     <div class="step-content">
                         <h3 class="step-title">AI分析</h3>
@@ -164,7 +190,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="step-item">
+                <div class="step-item animate-on-scroll">
                     <div class="step-number">3</div>
                     <div class="step-content">
                         <h3 class="step-title">特征提取</h3>
@@ -173,7 +199,7 @@
                         </p>
                     </div>
                 </div>
-                <div class="step-item">
+                <div class="step-item animate-on-scroll">
                     <div class="step-number">4</div>
                     <div class="step-content">
                         <h3 class="step-title">结果呈现</h3>
@@ -189,13 +215,13 @@
     <!-- 技术特点 -->
     <section class="section">
         <div class="container">
-            <div class="section-header text-center">
+            <div class="section-header text-center animate-on-scroll">
                 <h2 class="section-title">技术特点</h2>
                 <p class="section-description">我们的系统采用尖端技术，确保高精度检测</p>
             </div>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="bi bi-braces"></i>
                         </div>
@@ -206,7 +232,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="bi bi-graph-up"></i>
                         </div>
@@ -217,7 +243,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
+                    <div class="feature-card animate-on-scroll">
                         <div class="feature-icon">
                             <i class="bi bi-shield-lock"></i>
                         </div>
@@ -234,13 +260,13 @@
     <!-- 团队介绍预览 -->
     <section class="section bg-light">
         <div class="container">
-            <div class="section-header text-center">
+            <div class="section-header text-center animate-on-scroll">
                 <h2 class="section-title">核心团队</h2>
                 <p class="section-description">由AI、计算机视觉和安全领域的专家组成</p>
             </div>
             <div class="row g-4">
                 <div class="col-md-4">
-                    <div class="team-card">
+                    <div class="team-card animate-on-scroll">
                         <div class="team-image">
                             <img src="images/team-1.jpg" alt="团队成员" class="img-fluid">
                         </div>
@@ -254,7 +280,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="team-card">
+                    <div class="team-card animate-on-scroll">
                         <div class="team-image">
                             <img src="images/team-2.jpg" alt="团队成员" class="img-fluid">
                         </div>
@@ -268,7 +294,7 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="team-card">
+                    <div class="team-card animate-on-scroll">
                         <div class="team-image">
                             <img src="images/team-3.jpg" alt="团队成员" class="img-fluid">
                         </div>
@@ -282,7 +308,7 @@
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-5">
+            <div class="text-center mt-5 animate-on-scroll">
                 <a href="pages/team.html" class="btn btn-outline-primary">查看完整团队</a>
             </div>
         </div>
@@ -338,7 +364,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2025 DeepGuard. 保留所有权利。</p>
+                <p> 2025 DeepGuard. 保留所有权利。</p>
                 <div class="social-links">
                     <a href="#"><i class="bi bi-twitter"></i></a>
                     <a href="#"><i class="bi bi-facebook"></i></a>
@@ -351,5 +377,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        // 初始化动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 立即执行滚动检测，显示初始可见元素
+            scrollReveal();
+            
+            // 滚动显示动画
+            function scrollReveal() {
+                const elements = document.querySelectorAll('.animate-on-scroll');
+                elements.forEach((element) => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const viewportHeight = window.innerHeight;
+                    if (elementTop < viewportHeight - 50) {
+                        element.classList.add('scroll-reveal');
+                    }
+                });
+            }
+            
+            // 监听滚动事件
+            window.addEventListener('scroll', scrollReveal);
+            
+            // 移动设备菜单优化
+            const navbarToggler = document.querySelector('.navbar-toggler');
+            const navbarCollapse = document.querySelector('.navbar-collapse');
+            
+            if (navbarToggler && navbarCollapse) {
+                document.addEventListener('click', function(e) {
+                    const isClickInside = navbarToggler.contains(e.target) || navbarCollapse.contains(e.target);
+                    
+                    if (!isClickInside && navbarCollapse.classList.contains('show')) {
+                        navbarToggler.click();
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频检测 - DeepGuard AI多模态Deepfake检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* 视频检测页面特定样式 */
+        .detection-form {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .upload-container {
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            background-color: var(--light-color);
+        }
+        
+        .upload-container:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-container.highlight {
+            border-color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+        
+        #video-preview {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        
+        .preview-video {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>DeepGuard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            检测服务
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="text.html">文本检测</a></li>
+                            <li><a class="dropdown-item" href="audio.html">语音检测</a></li>
+                            <li><a class="dropdown-item" href="image.html">图像检测</a></li>
+                            <li><a class="dropdown-item active" href="video.html">视频检测</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team.html">团队介绍</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">联系我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">视频检测</h1>
+            <p class="page-description">
+                使用先进的AI技术识别合成或操纵的视频内容，帮助您分辨真实与虚假
+            </p>
+        </div>
+    </section>
+
+    <!-- 检测表单 -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="detection-form">
+                        <form id="video-upload-form" onsubmit="handleFormSubmit(event, 'video')">
+                            <div class="upload-container" id="drop-area">
+                                <i class="bi bi-film upload-icon"></i>
+                                <h3 class="mb-3">上传视频文件</h3>
+                                <p class="mb-4">支持 .mp4, .mov, .avi, .webm 格式</p>
+                                <p class="text-muted mb-4">拖放文件到此处或点击下方按钮选择</p>
+                                <input type="file" id="video-file" class="form-control" 
+                                    accept=".mp4,.mov,.avi,.webm" 
+                                    onchange="handleVideoFileSelect(event)" />
+                            </div>
+                            
+                            <div id="video-preview" class="text-center"></div>
+                            
+                            <div class="detection-options mb-4 mt-3">
+                                <h5 class="mb-3">检测选项</h5>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="face-detection" checked>
+                                    <label class="form-check-label" for="face-detection">
+                                        面部检测 (检测视频中的面部是否经过合成或操纵)
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="audio-sync-detection" checked>
+                                    <label class="form-check-label" for="audio-sync-detection">
+                                        音画同步检测 (分析语音与嘴唇动作是否匹配)
+                                    </label>
+                                </div>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="checkbox" id="content-consistency" checked>
+                                    <label class="form-check-label" for="content-consistency">
+                                        内容一致性检测 (分析视频内容的连续性和一致性)
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-shield-check me-2"></i>开始检测
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- 检测结果 -->
+                    <div id="video-result"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 相关说明 -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="mb-4">关于视频Deepfake检测</h2>
+                    <p>
+                        随着AI技术的发展，视频Deepfake已成为一种越来越普遍的现象。现代化的AI工具使得恶意行为者可以创建极为逼真的虚假视频内容，
+                        包括让名人或政治人物说出他们从未说过的话，或者将一个人的面部替换到另一个人的身体上。
+                    </p>
+                    <p>
+                        我们的视频Deepfake检测系统使用多层次的分析方法，结合了计算机视觉技术、音频分析和时间序列异常检测等，
+                        帮助识别视频中可能被人为操纵的部分，为您提供内容真实性的参考依据。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // 视频文件选择和预览
+        function handleVideoFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const videoPreview = document.getElementById('video-preview');
+            videoPreview.style.display = 'block';
+            videoPreview.innerHTML = '';
+            
+            // 创建视频预览元素
+            const videoElement = document.createElement('video');
+            videoElement.classList.add('preview-video');
+            videoElement.controls = true;
+            
+            // 创建视频源
+            const source = document.createElement('source');
+            source.src = URL.createObjectURL(file);
+            source.type = file.type;
+            
+            videoElement.appendChild(source);
+            videoPreview.appendChild(videoElement);
+        }
+    </script>
+</body>
+</html>

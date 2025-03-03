@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图像检测 - DeepGuard AI多模态Deepfake检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    
+    <style>
+        /* 图像检测页面特定样式 */
+        .detection-form {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .upload-container {
+            border: 2px dashed rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            background-color: var(--light-color);
+        }
+        
+        .upload-container:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .upload-container.highlight {
+            border-color: var(--primary-color);
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--gray-color);
+            margin-bottom: 1rem;
+        }
+        
+        #image-preview {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            background-color: #f8f9fa;
+            display: none;
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .file-info {
+            text-align: center;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .file-size {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        /* 结果卡片样式 */
+        .result-card {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .result-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .confidence-score {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .score-value {
+            display: flex;
+            align-items: center;
+        }
+        
+        .score-value span {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .features-analysis {
+            margin-bottom: 2rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-name {
+            width: 30%;
+            font-weight: 500;
+        }
+        
+        .feature-bar {
+            flex-grow: 1;
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+        
+        .feature-progress {
+            height: 100%;
+            border-radius: 4px;
+        }
+        
+        .feature-value {
+            width: 50px;
+            text-align: right;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .heatmap-container {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .heatmap-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .heatmap-image {
+            max-width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .image-analysis-details {
+            margin-top: 2rem;
+        }
+        
+        .image-analysis-details .card {
+            border: none;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 1rem;
+        }
+        
+        .image-analysis-details .card-header {
+            background-color: var(--light-color);
+            font-weight: 600;
+            padding: 1rem;
+            border-radius: 0.5rem 0.5rem 0 0 !important;
+        }
+        
+        .image-analysis-details .card-body {
+            padding: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>DeepGuard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            检测服务
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="text.html">文本检测</a></li>
+                            <li><a class="dropdown-item" href="audio.html">语音检测</a></li>
+                            <li><a class="dropdown-item active" href="image.html">图像检测</a></li>
+                            <li><a class="dropdown-item" href="video.html">视频检测</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="team.html">团队</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">图像检测</h1>
+            <p class="page-description">
+                使用先进的AI技术识别合成或操纵的图像内容
+            </p>
+        </div>
+    </section>
+
+    <!-- 检测表单 -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="detection-form">
+                        <form id="image-upload-form" onsubmit="handleFormSubmit(event, 'image')">
+                            <div class="upload-container" id="drop-area">
+                                <i class="bi bi-image upload-icon"></i>
+                                <h3 class="mb-3">上传图像文件</h3>
+                                <p class="mb-4">支持 .jpg, .jpeg, .png, .webp 格式</p>
+                                <p class="text-muted mb-4">拖放文件到此处或点击下方按钮选择</p>
+                                <input type="file" id="image-file" class="form-control" 
+                                    accept=".jpg,.jpeg,.png,.webp" 
+                                    onchange="handleFileSelect(event, 'image-preview')" />
+                            </div>
+                            
+                            <div id="image-preview" class="text-center"></div>
+                            
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="bi bi-shield-check me-2"></i>开始检测
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- 检测结果 -->
+                    <div id="image-result"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 相关说明 -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="mb-4">关于图像Deepfake检测</h2>
+                    <p>
+                        随着生成式AI技术的发展，合成图像变得越来越逼真，难以用肉眼分辨。
+                        这些技术可以用于创建误导性内容，伪造证据，或冒充他人的身份。
+                    </p>
+                    <p>
+                        我们的图像Deepfake检测系统利用最先进的计算机视觉算法和深度学习模型，
+                        通过分析图像异常、像素级特征、面部一致性等多重维度，有效识别人工合成或修改的图像内容。
+                    </p>
+                    
+                    <div class="row mt-5">
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="bi bi-check-lg"></i>
+                                </div>
+                                <h3>检测原理</h3>
+                                <ul>
+                                    <li>像素级异常分析</li>
+                                    <li>面部特征不一致性检测</li>
+                                    <li>光照和阴影逻辑检验</li>
+                                    <li>噪点模式识别</li>
+                                    <li>元数据篡改痕迹分析</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="bi bi-info-circle"></i>
+                                </div>
+                                <h3>使用建议</h3>
+                                <ul>
+                                    <li>上传清晰度较高的图像以获得更准确结果</li>
+                                    <li>如需分析人脸，请确保人脸区域足够大且清晰</li>
+                                    <li>检测结果仅供参考，需结合上下文判断</li>
+                                    <li>考虑图像来源及其可信度</li>
+                                    <li>对敏感信息，建议结合多种方法交叉验证</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="footer-brand">
+                        <i class="bi bi-shield-check me-2"></i>
+                        <span>DeepGuard</span>
+                    </div>
+                    <p class="footer-description">
+                        提供最先进的多模态Deepfake检测技术，保护您在数字时代的信息安全。
+                    </p>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">快速链接</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">首页</a></li>
+                        <li><a href="team.html">团队</a></li>
+                        <li><a href="#">隐私政策</a></li>
+                        <li><a href="#">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h5 class="footer-title">检测服务</h5>
+                    <ul class="footer-links">
+                        <li><a href="text.html">文本检测</a></li>
+                        <li><a href="audio.html">语音检测</a></li>
+                        <li><a href="image.html">图像检测</a></li>
+                        <li><a href="video.html">视频检测</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="footer-title">联系我们</h5>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="bi bi-envelope"></i>
+                            <span>contact@deepguard.com</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-telephone"></i>
+                            <span>+86 123 4567 8910</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-geo-alt"></i>
+                            <span>中国北京市海淀区科技园区123号</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p> 2025 DeepGuard. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#"><i class="bi bi-twitter"></i></a>
+                    <a href="#"><i class="bi bi-facebook"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                    <a href="#"><i class="bi bi-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        // 图像拖放上传功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropArea = document.getElementById('drop-area');
+            
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            ['dragenter', 'dragover'].forEach(eventName => {
+                dropArea.addEventListener(eventName, highlight, false);
+            });
+            
+            ['dragleave', 'drop'].forEach(eventName => {
+                dropArea.addEventListener(eventName, unhighlight, false);
+            });
+            
+            function highlight() {
+                dropArea.classList.add('highlight');
+            }
+            
+            function unhighlight() {
+                dropArea.classList.remove('highlight');
+            }
+            
+            dropArea.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const files = dt.files;
+                
+                if (files.length) {
+                    const fileInput = document.getElementById('image-file');
+                    fileInput.files = files;
+                    
+                    // 触发change事件以显示预览
+                    const event = new Event('change');
+                    fileInput.dispatchEvent(event);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

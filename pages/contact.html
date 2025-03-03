@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - DeepGuard Deepfake检测系统</title>
+    <meta name="description" content="联系DeepGuard团队获取更多信息、技术支持或合作机会。">
+    <!-- CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <!-- 网站图标 -->
+    <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <img src="../images/logo.png" alt="DeepGuard Logo" height="40">
+                DeepGuard
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#services">服务</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html#how-it-works">工作原理</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../pages/team.html">团队</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="../pages/contact.html">联系我们</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary btn-sm text-white ms-2" href="../pages/detector.html">开始检测</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h1 class="page-title animate-on-scroll">联系我们</h1>
+                    <p class="page-description animate-on-scroll">
+                        有任何问题或建议？请随时与我们联系！
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系信息 -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 animate-on-scroll">
+                    <div class="contact-info">
+                        <h2 class="mb-4">联系方式</h2>
+                        <div class="contact-item mb-4">
+                            <div class="icon-box">
+                                <i class="bi bi-geo-alt"></i>
+                            </div>
+                            <div>
+                                <h3>地址</h3>
+                                <p>中国北京市海淀区XX路XX号</p>
+                            </div>
+                        </div>
+                        <div class="contact-item mb-4">
+                            <div class="icon-box">
+                                <i class="bi bi-envelope"></i>
+                            </div>
+                            <div>
+                                <h3>邮箱</h3>
+                                <p>contact@deepguard.ai</p>
+                            </div>
+                        </div>
+                        <div class="contact-item mb-4">
+                            <div class="icon-box">
+                                <i class="bi bi-telephone"></i>
+                            </div>
+                            <div>
+                                <h3>电话</h3>
+                                <p>+86 010-1234-5678</p>
+                            </div>
+                        </div>
+                        <div class="social-links mt-5">
+                            <a href="#" class="social-link">
+                                <i class="bi bi-github"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            <a href="#" class="social-link">
+                                <i class="bi bi-wechat"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 animate-on-scroll">
+                    <div class="contact-form">
+                        <h2 class="mb-4">发送消息</h2>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="name" class="form-label">姓名</label>
+                                        <input type="text" class="form-control" id="name" placeholder="请输入您的姓名" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-group">
+                                        <label for="email" class="form-label">邮箱</label>
+                                        <input type="email" class="form-control" id="email" placeholder="请输入您的邮箱" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="subject" class="form-label">主题</label>
+                                <input type="text" class="form-control" id="subject" placeholder="请输入主题" required>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="message" class="form-label">内容</label>
+                                <textarea class="form-control" id="message" rows="6" placeholder="请输入您的消息内容" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">发送消息</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section class="section bg-light">
+        <div class="container">
+            <div class="section-header text-center animate-on-scroll">
+                <h2 class="section-title">常见问题</h2>
+                <p class="section-description">以下是用户经常咨询的问题</p>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-lg-10 mx-auto">
+                    <div class="accordion" id="accordionFAQ">
+                        <div class="accordion-item animate-on-scroll">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    DeepGuard的检测准确率是多少？
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    DeepGuard系统在多种类型的Deepfake检测任务中平均达到99.7%的准确率。我们的系统使用多模态融合技术，能同时分析文本、音频、图像和视频中的伪造特征，显著提高了检测准确性。在最新的外部基准测试中，我们的系统在处理高质量Deepfake内容时也保持了高性能表现。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item animate-on-scroll">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    检测过程需要多长时间？
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    检测时间取决于内容类型和大小。文本检测通常在几秒内完成，图像检测在5-10秒内完成，短视频（1分钟以内）需要约30秒到1分钟。对于较长的视频内容，系统会采用优化算法，通常每分钟视频需要20-30秒处理时间。在高峰使用期间，处理时间可能会略有增加。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item animate-on-scroll">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    上传的内容会被保存吗？
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    保护用户隐私是我们的首要任务。用户上传的内容仅在检测过程中临时存储，检测完成后立即删除。我们不会永久存储任何用户内容，也不会将其用于训练我们的模型或任何其他目的。所有数据传输均采用高级加密技术，确保您的信息安全。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item animate-on-scroll">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                    是否提供API接口？
+                                </button>
+                            </h2>
+                            <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                <div class="accordion-body">
+                                    是的，我们提供完整的API接口，可以集成到您的应用、平台或服务中。API支持所有检测功能，包括文本、音频、图像和视频分析。企业用户可以根据需求选择不同的API套餐，包括按调用次数计费或无限制使用的月度订阅计划。请通过联系表单或直接发送邮件至api@deepguard.ai了解详情和定价。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 地图 -->
+    <section class="section">
+        <div class="container">
+            <div class="map-container animate-on-scroll">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.1512237691034!2d116.31784661527807!3d39.99225638388451!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x35f05182dc80483f%3A0xa615b7d3915a6aa8!2z5YyX5Lqs5aSn5a2m!5e0!3m2!1szh-CN!2scn!4v1651234567890!5m2!1szh-CN!2scn" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-columns">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="footer-brand">
+                            <img src="../images/logo-white.png" alt="DeepGuard Logo" height="40">
+                            <h5>DeepGuard</h5>
+                            <p>保护数字真实，对抗AI生成内容</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="footer-links">
+                            <h5>链接</h5>
+                            <ul>
+                                <li><a href="../index.html">首页</a></li>
+                                <li><a href="../index.html#services">服务</a></li>
+                                <li><a href="../index.html#how-it-works">工作原理</a></li>
+                                <li><a href="../pages/team.html">团队</a></li>
+                                <li><a href="../pages/contact.html">联系我们</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-links">
+                            <h5>服务</h5>
+                            <ul>
+                                <li><a href="../pages/detector.html">文本检测</a></li>
+                                <li><a href="../pages/detector.html">语音检测</a></li>
+                                <li><a href="../pages/detector.html">图像检测</a></li>
+                                <li><a href="../pages/detector.html">视频检测</a></li>
+                                <li><a href="#">API接口</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-contact">
+                            <h5>联系我们</h5>
+                            <address>
+                                <p><i class="bi bi-geo-alt"></i> 北京市海淀区XX路XX号</p>
+                                <p><i class="bi bi-envelope"></i> contact@deepguard.ai</p>
+                                <p><i class="bi bi-telephone"></i> +86 010-1234-5678</p>
+                            </address>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                                <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                                <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
+                                <a href="#" class="social-link"><i class="bi bi-wechat"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">© 2023 DeepGuard. 保留所有权利.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="bi bi-github"></i></a>
+                    <a href="#" class="social-link"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="social-link"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#" class="social-link"><i class="bi bi-wechat"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript 文件 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 控制滚动动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated', 'fadeInUp');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            animateElements.forEach(element => {
+                observer.observe(element);
+            });
+            
+            // 表单提交处理
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // 在实际应用中，这里应该发送AJAX请求到后端API
+                    alert('感谢您的留言！我们会尽快回复您。');
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>团队介绍 - DeepGuard AI多模态Deepfake检测系统</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* 团队页面特定样式 */
+        .team-member {
+            background-color: var(--white-color);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 5px solid var(--light-color);
+        }
+        
+        .member-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .member-role {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .member-bio {
+            color: var(--text-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* 加入团队部分样式 */
+        .join-team {
+            background-color: var(--light-color);
+            border-radius: 1rem;
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+        
+        .join-team-title {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* 动画效果 */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="../index.html">
+                <i class="bi bi-shield-check me-2"></i>
+                <span>DeepGuard</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">首页</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" 
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            检测服务
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="text.html">文本检测</a></li>
+                            <li><a class="dropdown-item" href="audio.html">语音检测</a></li>
+                            <li><a class="dropdown-item" href="image.html">图像检测</a></li>
+                            <li><a class="dropdown-item" href="video.html">视频检测</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="team.html">团队介绍</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">联系我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面标题 -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">团队介绍</h1>
+            <p class="page-description">
+                了解DeepGuard背后的创新团队，他们致力于打造最前沿的Deepfake检测技术
+            </p>
+        </div>
+    </section>
+
+    <!-- 高级介绍部分 -->
+    <section class="section">
+        <div class="container">
+            <div class="text-center mb-5 animate-on-scroll">
+                <h2 class="section-title">我们的核心团队</h2>
+                <p class="section-description">
+                    DeepGuard汇集了来自人工智能、计算机视觉、自然语言处理和音频分析等多个领域的顶尖专家，
+                    共同致力于研发最先进的Deepfake检测技术，保护数字内容的真实性与可信度。
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员 -->
+    <section class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-member text-center animate-on-scroll">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="张教授" class="member-photo">
+                        <h3 class="member-name">张智博 教授</h3>
+                        <p class="member-role">首席科学家 / 项目负责人</p>
+                        <p class="member-bio">
+                            北京大学计算机科学博士，在AI安全和媒体鉴别领域拥有超过15年的研究经验。
+                            曾在多个国际顶级期刊发表论文，主导研发了多个大型AI安全项目。
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-member text-center animate-on-scroll">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="李研究员" class="member-photo">
+                        <h3 class="member-name">李欣悦 博士</h3>
+                        <p class="member-role">深度学习专家 / 文本检测模块负责人</p>
+                        <p class="member-bio">
+                            清华大学人工智能博士，专注于NLP和文本生成检测领域。
+                            在加入团队前，曾在顶级科技公司担任研究科学家，主导多个语言模型项目。
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-medium"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-member text-center animate-on-scroll">
+                        <img src="https://randomuser.me/api/portraits/men/57.jpg" alt="王工程师" class="member-photo">
+                        <h3 class="member-name">王伟峰 博士</h3>
+                        <p class="member-role">计算机视觉专家 / 图像检测模块负责人</p>
+                        <p class="member-bio">
+                            香港科技大学计算机视觉博士，曾参与多个国际计算机视觉挑战赛并获奖。
+                            拥有丰富的图像处理和人脸识别技术经验，发表超过20篇学术论文。
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                            <a href="#"><i class="bi bi-github"></i></a>
+                            <a href="#"><i class="bi bi-google"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-member text-center animate-on-scroll">
+                        <img src="https://randomuser.me/api/portraits/women/29.jpg" alt="陈工程师" class="member-photo">
+                        <h3 class="member-name">陈美琪 博士</h3>
+                        <p class="member-role">音频分析专家 / 语音检测模块负责人</p>
+                        <p class="member-bio">
+                            美国麻省理工学院电子工程博士，专注于语音处理和音频分析技术。
+                            曾在多家知名音频技术公司担任研发负责人，拥有多项音频处理相关专利。
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                            <a href="#"><i class="bi bi-twitter"></i></a>
+                            <a href="#"><i class="bi bi-spotify"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-member text-center animate-on-scroll">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="刘工程师" class="member-photo">
+                        <h3 class="member-name">刘天宇 博士</h3>
+                        <p class="member-role">多媒体分析专家 / 视频检测模块负责人</p>
+                        <p class="member-bio">
+                            斯坦福大学计算机科学博士，专注于视频内容分析和异常检测领域。
+                            曾参与大型视频平台的内容审核系统开发，拥有丰富的视频处理经验。
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                            <a href="#"><i class="bi bi-github"></i></a>
+                            <a href="#"><i class="bi bi-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="team-member text-center animate-on-scroll">
+                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="赵工程师" class="member-photo">
+                        <h3 class="member-name">赵雨晴</h3>
+                        <p class="member-role">前端工程师 / UI设计师</p>
+                        <p class="member-bio">
+                            前端开发专家，拥有8年Web和移动应用开发经验。负责DeepGuard平台的用户界面设计和前端实现，
+                            专注于打造流畅、直观的用户体验。
+                        </p>
+                        <div class="social-links">
+                            <a href="#"><i class="bi bi-linkedin"></i></a>
+                            <a href="#"><i class="bi bi-github"></i></a>
+                            <a href="#"><i class="bi bi-dribbble"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 加入团队部分 -->
+    <section class="section bg-light-section">
+        <div class="container">
+            <div class="join-team text-center animate-on-scroll">
+                <h2 class="join-team-title">与我们一起对抗Deepfake威胁</h2>
+                <p class="mb-4">
+                    我们正在寻找在人工智能、机器学习、计算机视觉和前端开发等领域有才华的专业人士加入我们的团队。
+                    如果您对保护数字真实性充满热情，并希望为打击Deepfake技术滥用做出贡献，欢迎联系我们！
+                </p>
+                <a href="#" class="btn btn-primary px-4 py-2">查看职位空缺</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚部分 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-title">关于DeepGuard</h5>
+                    <p class="footer-text">
+                        DeepGuard是一个多模态AI Deepfake检测系统，致力于保护数字内容的真实性和可信度，
+                        帮助用户识别和防范各类生成式AI造假内容。
+                    </p>
+                </div>
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5 class="footer-title">快速链接</h5>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">首页</a></li>
+                        <li><a href="text.html">文本检测</a></li>
+                        <li><a href="audio.html">语音检测</a></li>
+                        <li><a href="image.html">图像检测</a></li>
+                        <li><a href="video.html">视频检测</a></li>
+                        <li><a href="team.html">团队介绍</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="footer-title">联系我们</h5>
+                    <ul class="footer-contact">
+                        <li><i class="bi bi-envelope-fill"></i> info@deepguard.ai</li>
+                        <li><i class="bi bi-telephone-fill"></i> +86 10 8888 7777</li>
+                        <li><i class="bi bi-geo-alt-fill"></i> 北京市海淀区中关村科技园区</li>
+                    </ul>
+                    <div class="social-icons mt-3">
+                        <a href="#"><i class="bi bi-facebook"></i></a>
+                        <a href="#"><i class="bi bi-twitter"></i></a>
+                        <a href="#"><i class="bi bi-linkedin"></i></a>
+                        <a href="#"><i class="bi bi-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DeepGuard. 保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 基础脚本 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/main.js"></script>
+    
+    <!-- 动画脚本 -->
+    <script>
+        // 滚动动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const animateElements = document.querySelectorAll('.animate-on-scroll');
+            
+            // 初始检查元素是否在视口中
+            checkVisibility();
+            
+            // 滚动时检查元素是否在视口中
+            window.addEventListener('scroll', checkVisibility);
+            
+            function checkVisibility() {
+                animateElements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const elementVisible = 150;
+                    
+                    if (elementTop < window.innerHeight - elementVisible) {
+                        element.classList.add('visible');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
